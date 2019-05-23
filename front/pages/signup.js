@@ -1,5 +1,5 @@
 //원래 안써도 되지만
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
 import { Input, Form, Checkbox, Button } from 'antd';
@@ -9,16 +9,30 @@ import { Input, Form, Checkbox, Button } from 'antd';
 // 훅스 문법 사용
 const Signup = () => {
     //스테이트
-    const [id, setId] = useState('');
-    const [nick, setNick] = useState('');
-    const [password, setPassword] = useState('');
+    // 커스텀 훅으로 대체
+    //const [id, setId] = useState('');
+    //const [nick, setNick] = useState('');
+    //const [password, setPassword] = useState('');
     const [passwordcheck, setPasswordCheck] = useState('');
     const [term, setTerm] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [termError, setTermError] = useState(false);
 
+    // 커스텀훅 추가
+    const useInput = (initValue = null) => {
+        const [value, setter] = useState(initValue);
+        const handler = useCallback((e) => { 
+            setter(e.target.value); 
+        }, []);
+        return [value, handler];
+    };
+    const [id, onChangeId] = useInput('');
+    const [nick, onChangeNick] = useInput('');
+    const [password, onChangePassword] = useInput('');
+
+
     //리스너
-    const onSubmit = (e) => {
+    const onSubmit = useCallback((e) => {
         e.preventDefault();
         // 패스워드 검증
         if(password !== passwordcheck){
@@ -34,26 +48,29 @@ const Signup = () => {
             passwordcheck,
             term
         });
-    };
-    const onChangeId = (e) => {
-        setId(e.target.value);
-    };
-    const onChangeNick = (e) => {
-        setNick(e.target.value);
-    };
-    const onChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
-    const onChangePasswordCheck = (e) => {
+    }, [password, passwordcheck, term]);
+    
+    // 커스텀 훅으로 대체
+    // const onChangeId = (e) => {
+    //     setId(e.target.value);
+    // };
+    // const onChangeNick = (e) => {
+    //     setNick(e.target.value);
+    // };
+    // const onChangePassword = (e) => {
+    //     setPassword(e.target.value);
+    // };
+    const onChangePasswordCheck = useCallback((e) => {
         // 입력값에 상태변화에 비밀번호 값이 일치하지 않는지 체크
         setPasswordError(e.target.value !== password);
         setPasswordCheck(e.target.value);
-    };
-    const onChangeTerm = (e) => {
+    }, [password]);
+    const onChangeTerm = useCallback((e) => {
         // 에러는 기본적으로 꺼준다.
         setTermError(false);
         setTerm(e.target.checked);
-    };
+    }, []);
+
 
 	return (
         <>
