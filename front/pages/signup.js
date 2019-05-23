@@ -2,7 +2,25 @@
 import React, {useState, useCallback} from 'react';
 import { Input, Form, Checkbox, Button } from 'antd';
 
+// 프로타입스 테스트 : TextInput 컴포넌트는 부모로부터 문자열인 값을 기대하고 있는 시나리오임.
+// 프로그램의 안정성을 높일 수 있다.
+import PropTypes from 'prop-types';
+const TextInput = ({value}) => {
+    return (
+        <div>{value}</div>
+    )
+};
+TextInput.propTypes = {
+    value: PropTypes.string,
+};
 
+export const useInput = (initValue = null) => {
+    const [value, setter] = useState(initValue);
+    const handler = useCallback((e) => { 
+        setter(e.target.value); 
+    }, []);
+    return [value, handler];
+};
 
 // 훅스 문법 사용
 const Signup = () => {
@@ -16,14 +34,14 @@ const Signup = () => {
     const [passwordError, setPasswordError] = useState(false);
     const [termError, setTermError] = useState(false);
 
-    // 커스텀훅 추가
-    const useInput = (initValue = null) => {
-        const [value, setter] = useState(initValue);
-        const handler = useCallback((e) => { 
-            setter(e.target.value); 
-        }, []);
-        return [value, handler];
-    };
+    // 커스텀훅 추가 : 원래 여기에 커스텀훅이 있었는데 외부에서도 사용가능하게 밖으로 빼게 됨 대신 export 추가됨
+    // const useInput = (initValue = null) => {
+    //     const [value, setter] = useState(initValue);
+    //     const handler = useCallback((e) => { 
+    //         setter(e.target.value); 
+    //     }, []);
+    //     return [value, handler];
+    // };
     const [id, onChangeId] = useInput('');
     const [nick, onChangeNick] = useInput('');
     const [password, onChangePassword] = useInput('');
@@ -73,6 +91,8 @@ const Signup = () => {
 	return (
         <>
             <Form onSubmit={onSubmit} style={{ padding:10}}>
+                
+                <TextInput value="135" />
                 <div>
                     <label htmlFor="user-id">아이디</label>
                     <br />

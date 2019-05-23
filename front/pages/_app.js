@@ -1,6 +1,7 @@
 //원래 안써도 되지만
 import React from 'react';
 import Head from 'next/head';
+import PropTypes from 'prop-types';
 import AppLayout from '../components/AppLayout';
 
 const NodeBird = ({Component}) => {
@@ -17,4 +18,10 @@ const NodeBird = ({Component}) => {
 		</>
     );
 };
+
+// 검증 검사 : 타입스크립트는 프로타입스를 안쓴다. 자체적인 걸 쓴다.
+NodeBird.propTypes = {
+    Component : PropTypes.elementType,
+}
+
 export default NodeBird;
