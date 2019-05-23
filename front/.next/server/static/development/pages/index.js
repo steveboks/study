@@ -227,7 +227,7 @@ var Home = function Home() {
         },
         __self: this
       }),
-      action: [react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(antd__WEBPACK_IMPORTED_MODULE_1__["Icon"], {
+      actions: [react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(antd__WEBPACK_IMPORTED_MODULE_1__["Icon"], {
         type: "retweet",
         key: "retweet",
         __source: {
@@ -244,7 +244,7 @@ var Home = function Home() {
         },
         __self: this
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(antd__WEBPACK_IMPORTED_MODULE_1__["Icon"], {
-        type: "massage",
+        type: "message",
         key: "message",
         __source: {
           fileName: _jsxFileName,

@@ -45,10 +45,10 @@ const Home = () => {
 				<Card
 				key={+c.createAt}
 				cover={c.img && <img alt="example" src={c.img} />}
-				action={[
+				actions={[
 					<Icon type="retweet" key="retweet" />,
 					<Icon type="heart" key="heart" />,
-					<Icon type="massage" key="message" />,
+					<Icon type="message" key="message" />,
 					<Icon type="ellipsis" key="ellipsis" />
 				]}
 				extra={<Button>팔로우</Button>}
